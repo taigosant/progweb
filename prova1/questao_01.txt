@@ -1,0 +1,13 @@
+Erro 1 : Tags "<comment>" e "</comment>" não existem. A sintaxe do comentario é: 
+    "<!-- {texto}  -->"
+
+Erro 2: Documento html não possui body. Pode ser corrigido adicionando um elemento body com as Tags
+<body></body> logo após o fim do elemento head.
+
+Erro 3: Dentro do elemento "style" 
+há um seletor de elemento que tenta selecionar um elemento "width" e atribuir um valor para "#para".
+Os lugares estão trocados "width" é um atributo e "#para" é um seletor por id. Basta trocá-los de lugar para resolver o erro.
+
+Erro 4: Tag <span> sem fechamento. Para resolver, basta fechar a tag com </span>.
+
+
