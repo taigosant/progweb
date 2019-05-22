@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<!-- Página do Instituto de Computação -->
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Instituto de Computação</title>
+        <script type="text/javascript">
+            const showCalc = () =>{
+                let value = document.getElementById("raio").value;
+                if (value){
+                    let areaCirc = (Math.PI * Math.pow(value, 2)).toFixed(2);
+                    let circuferencia = (2 * Math.PI * value).toFixed(2);
+
+                    let area = document.getElementById("area");
+                    let circ = document.getElementById("circ");
+                    area.value = areaCirc;
+                    circ.value = circuferencia;
+                    console.log("[CALC]", area, circ);
+                }else{
+                    alert("Valor invalido!");
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <div id="inputs" style="text-align: justify">
+            <label for="raio">Informe o raio: </label>
+            <input type="text" id="raio" name="raio">
+            <button type="button" id="ok" onclick="showCalc()">Ok</button><br>
+            <label for="area">Area do circulo: </label>
+            <input type="text" id="area" name="area"><br>
+            <label for="circ">Circuferencia: </label>
+            <input type="text" id="circ" name="circ"><br>
+
+        </div>
+    </body>
+</html>
