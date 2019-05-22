@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!-- Página do Instituto de Computação -->
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Instituto de Computação</title>
+        <style>
+            .input-bar {
+                width: 50px;
+            }
+            .input-bar-width {
+                width: 50px;
+            }
+            .bar {
+                width: 20px;
+                height: 100px;
+                background-color: red;
+                margin: 5px;
+                position: relative;
+                display: none;
+            }
+        </style>
+        <script type="text/javascript" src="scripts/dom2.js">
+        </script>
+    </head>
+    <body>
+        <h1>Um gráfico de barras</h1>
+        <div>
+           Informe a altura das barras: 
+           <input type="text" class="input-bar" id="input-bar1">
+           <input type="text" class="input-bar" id="input-bar2">
+           <input type="text" class="input-bar" id="input-bar3">
+           <input type="text" class="input-bar" id="input-bar4">
+           <input type="text" class="input-bar" id="input-bar5">
+        </div><br>
+        <div>
+            Informe a largura das barras: 
+            <input type="text" class="input-bar-width" id="bar-width">
+        </div><br>
+        <button type="button" onclick="desenharGrafico()">Desenhar o gráfico</button><br>
+        
+        <div id="bar1" class="bar"></div>
+        <div id="bar2" class="bar"></div>
+        <div id="bar3" class="bar"></div>
+        <div id="bar4" class="bar"></div>
+        <div id="bar5" class="bar"></div>
+
+    </body>
+</html>

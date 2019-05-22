@@ -113,7 +113,7 @@ console.log("[SET 2]", set2.toString());
 
 console.log("[UNIAO]", IntegerSet.uniao(set1,set2).toString());
 console.log("[INTER]", IntegerSet.intersecao(set1,set2).toString());
-console.log("[DIF]", IntegerSet.diferenca(set1,set2).toString());
+console.log("[DIF] (set1 - set2)", IntegerSet.diferenca(set1,set2).toString());
 
 
 
