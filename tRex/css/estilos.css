@@ -94,3 +94,11 @@
     float: right;
     top: 0;
 }
+
+.ptero{
+    width: 46px;
+    height: 34px;
+    background-image: url(sprites.png);
+    position: absolute;
+    background-position: -134px -8px; 
+}

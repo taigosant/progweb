@@ -4,6 +4,8 @@
     const SCORE_PER_SEC = 6;
     const PROB_NUVEM = 1;
     const CACTUS_SPAWN_TIME = 800000;
+    const PTERO_SPAWN_TIME = 900000;
+    const PTERO_PROB = 0.6;
     const jumpVel = 2;
     const gravity = 2;
     var score = 0;
@@ -19,6 +21,7 @@
     var dino;
     var nuvens = [];
     var cactos = [];
+    var pteros = [];
     var cactoSmallSprites = [-228, -245, -262, -279, -296, -313];
     var cactoBigSprites = [-332, -357, -382, -407];
     var fontSprites = [-484];
@@ -113,8 +116,9 @@
         let dinoDiv = $(dino.element);
         let obstacles = [];
         obstacles = obstacles.concat(cactos.slice(0, Math.min(4, cactos.length)));
+        obstacles = obstacles.concat(pteros);
         obstacles = obstacles.filter((value) => {
-            if (($(value.element).position().left - ($(dinoDiv).position().left + $(dinoDiv).width())) <= 100) {
+            if (Math.abs($(value.element).position().left - ($(dinoDiv).position().left + $(dinoDiv).width())) <= 100) {
                 // console.log("[POS]", $(value.element).position(), $(dinoDiv).position());
                 return true;
             }
@@ -122,7 +126,7 @@
         });
 
         if (obstacles.length > 0) {
-            // console.log("[OBS]", obstacles);
+            console.log("[OBS]", obstacles);
             for (let i = 0; i < obstacles.length; i++) {
                 let curObst = $(obstacles[i].element);
                 if (collision($(dinoDiv), $(curObst))) {
@@ -155,9 +159,12 @@
     function init() {
         gameLoop = setInterval(updateCenario, 1000 / FPS);
         dinoLoop = setInterval(run, 2000 / FPS);
-        spawnLoop = setInterval(spawnCactus, CACTUS_SPAWN_TIME / FPS);
+        spawnCactusLoop = setInterval(spawnCactus, CACTUS_SPAWN_TIME / FPS);
+        spawnPteroLoop = setInterval(spawnPtero, PTERO_SPAWN_TIME / FPS);
+        flyingLoop = setInterval(moveFying, 1000 / FPS);
+        wingsLoop = setInterval(moveWing, 200);
         scoreLoop = setInterval(updateScore, 1000 / 6.6);
-        intervals = [gameLoop, dinoLoop, spawnLoop, scoreLoop];
+        intervals = [gameLoop, dinoLoop, spawnCactusLoop, spawnPteroLoop, flyingLoop, wingsLoop, scoreLoop];
     }
 
     class CactoSmall {
@@ -256,7 +263,7 @@
             if (parseInt(this.element.style.bottom) <= 0) {
                 this.status = 0;
                 this.element.style.bottom = "0px";
-            } 
+            }
         }
     }
 
@@ -331,6 +338,47 @@
 
     }
 
+    class Ptero {
+        constructor() {
+            this.sprites = {
+                'voar1': '-134px -8px',
+                'voar2': '-180px -2px'
+            }
+            this.element = document.createElement("div");
+            this.element.className = "ptero";
+            this.element.style.right = "0px";
+        }
+        mover(moveFactor = 1) {
+            this.element.style.right = (parseInt(this.element.style.right) + moveFactor) + "px";
+        }
+
+        voar() {
+            this.element.style.backgroundPosition = (this.element.style.backgroundPosition == this.sprites.voar1) ? this.sprites.voar2 : this.sprites.voar1;
+        }
+
+        append() {
+            deserto.element.appendChild(this.element);
+        }
+    }
+
+    function spawnPtero() {
+        let possibleHeights = ["-2px", "18px", "38px"];
+        if (score > 100 && (Math.random() < PTERO_PROB)) {
+            let newPtero = new Ptero();
+            newPtero.element.style.bottom = possibleHeights[Math.ceil(Math.random() * 3)];
+            newPtero.append();
+            pteros.push(newPtero);
+        }
+    }
+
+    function moveFying() {
+        pteros.forEach(p => p.mover());
+    }
+
+    function moveWing() {
+        pteros.forEach(p => p.voar());
+    }
+
     function spawnCactus() {
         let probs = [1, 1, 1, 1, 2, 2, 2, 3, 3, 4]
         let cactosNum = probs[Math.floor(Math.random() * probs.length)]; // escolhendo numero de cactos
@@ -380,6 +428,15 @@
             return true;
         });
 
+        pteros = pteros.filter((value, idx) => {
+            let elem = $(value.element);
+            let position = $(elem).position();
+            if (position.left < (parseInt($(elem).width()) * -1)) {
+                $(elem).remove();
+                return false;
+            }
+            return true;
+        });
     }
 
     window.addEventListener("keydown", function (e) {
