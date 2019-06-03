@@ -31,7 +31,7 @@
 
     function drawScore(first = false) {
         if (first) {
-            for (let i = 0; i < 5; i++){
+            for (let i = 0; i < 5; i++) {
                 let curFont = document.createElement("div");
                 curFont.className = "font";
                 curFont.dataset.value = 0;
@@ -39,21 +39,21 @@
                 scoreElements.push(curFont);
             }
         } else {
-            $(".font").each(function(){
+            $(".font").each(function () {
                 $(this).remove();
             });
-            for (let font of scoreElements){
+            for (let font of scoreElements) {
                 deserto.element.appendChild(font);
             }
         }
 
     }
 
-    function updateScore(){
+    function updateScore() {
         score++;
         scoreElements = [];
         charsList = score.toString().split("").reverse();
-        for (let i = 0; i < charsList.length && i < 5; i++){
+        for (let i = 0; i < charsList.length && i < 5; i++) {
             let curFont = document.createElement("div");
             curFont.className = "font";
             curFont.dataset.value = parseInt(charsList[i]);
@@ -61,13 +61,13 @@
             scoreElements.push(curFont);
         }
 
-        for(let i = 0; i < (5 - charsList.length); i++){
+        for (let i = 0; i < (5 - charsList.length); i++) {
             let curFont = document.createElement("div");
             curFont.className = "font";
             curFont.dataset.value = 0;
             scoreElements.push(curFont);
         }
-        console.log(scoreElements);
+        // console.log(scoreElements);
         drawScore();
     }
 
@@ -78,6 +78,7 @@
     }
 
     function gameOver() {
+        dino.morto();
         stopAll();
         __gameOver = true;
         nuvens = [];
@@ -221,10 +222,13 @@
         this.sprites = {
             'correr1': '-766px',
             'correr2': '-810px',
-            'pulando': '-678px'
+            'pulando': '-678px',
+            'morto': '-853px',
+            'agachado1': '-941px -19px',
+            'agachado2': '-1000px -19px'
         };
         this.status = 0; // 0:correndo; 1:subindo; 2: descendo; 3: agachado
-        this.alturaMaxima = "100px";
+        this.alturaMaxima = 100;
         this.element = document.createElement("div");
         this.element.className = "dino";
         this.element.style.backgroundPositionX = this.sprites.correr1;
@@ -233,19 +237,41 @@
     }
 
     Dino.prototype.correr = function () {
+        // console.log("[STATUS]", dino.status, dino.element.style.bottom);
         if (this.status == 0) {
             this.element.style.backgroundPositionX =
                 (this.element.style.backgroundPositionX == this.sprites.correr1) ? this.sprites.correr2 : this.sprites.correr1;
-        }
-        else if (this.status == 1) {
+        } else if (this.status == 3) { // agachando
+            this.agachar();
+            if (parseInt(this.element.style.bottom) > 0) {
+                this.element.style.bottom = Math.max(0, (parseInt(this.element.style.bottom) - 1 * (gravity + 1))) + "px";
+            }
+        } else if (this.status == 1) {
             this.element.style.backgroundPositionX = this.sprites.pulando;
             this.element.style.bottom = (parseInt(this.element.style.bottom) + 1 * jumpVel) + "px";
-            if (this.element.style.bottom == this.alturaMaxima) this.status = 2;
+            if (parseInt(this.element.style.bottom) >= this.alturaMaxima) this.status = 2;
         }
         else if (this.status == 2) {
             this.element.style.bottom = (parseInt(this.element.style.bottom) - 1 * gravity) + "px";
-            if (this.element.style.bottom == "0px") this.status = 0;
+            if (parseInt(this.element.style.bottom) <= 0) {
+                this.status = 0;
+                this.element.style.bottom = "0px";
+            } 
         }
+    }
+
+    Dino.prototype.morto = function () {
+        this.element.style.width = '45px';
+        this.element.style.height = '45px';
+        this.element.style.backgroundPositionX = this.sprites.morto;
+    }
+
+    Dino.prototype.agachar = function () {
+        this.element.style.backgroundPosition =
+            (this.element.style.backgroundPosition == this.sprites.agachado1) ? this.sprites.agachado2 : this.sprites.agachado1;
+        this.element.style.width = '59px';
+        this.element.style.height = '30px';
+
     }
 
     function Nuvem() {
@@ -374,6 +400,10 @@
             return;
         }
 
+        if (e.key == "ArrowDown") {
+            dino.status = 3;
+        }
+
         if (e.keyCode == 80) {
             if (!paused) {
                 paused = true;
@@ -388,8 +418,12 @@
     window.addEventListener("keyup", function (e) {
         // console.log(e);
         if (e.key == "ArrowUp" && dino.status == 1 && parseInt(dino.element.style.bottom) > 35) {
-
             dino.status = 2;
+        } else if (e.key == "ArrowDown" && dino.status == 3) {
+            dino.status = 0;
+            dino.element.style.backgroundPosition = dino.sprites.correr1 + " -3px"
+            dino.element.style.width = '45px';
+            dino.element.style.height = '45px';
         }
     });
 
