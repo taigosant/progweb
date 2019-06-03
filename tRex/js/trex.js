@@ -1,8 +1,8 @@
 (function () {
 
     const FPS = 200;
+    const SCORE_PER_SEC = 6;
     const PROB_NUVEM = 1;
-    const MAX_CACTO = 4;
     const CACTUS_SPAWN_TIME = 800000;
     const jumpVel = 2;
     const gravity = 2;
@@ -34,15 +34,41 @@
             for (let i = 0; i < 5; i++){
                 let curFont = document.createElement("div");
                 curFont.className = "font";
-                curFont.backgroundPositionX = fontSprites[0];
+                curFont.dataset.value = 0;
                 deserto.element.appendChild(curFont);
-                console.log(curFont);
                 scoreElements.push(curFont);
             }
         } else {
-            ;
+            $(".font").each(function(){
+                $(this).remove();
+            });
+            for (let font of scoreElements){
+                deserto.element.appendChild(font);
+            }
         }
 
+    }
+
+    function updateScore(){
+        score++;
+        scoreElements = [];
+        charsList = score.toString().split("").reverse();
+        for (let i = 0; i < charsList.length && i < 5; i++){
+            let curFont = document.createElement("div");
+            curFont.className = "font";
+            curFont.dataset.value = parseInt(charsList[i]);
+            curFont.style.backgroundPositionX = `${fontSprites[parseInt(charsList[i])]}px`;
+            scoreElements.push(curFont);
+        }
+
+        for(let i = 0; i < (5 - charsList.length); i++){
+            let curFont = document.createElement("div");
+            curFont.className = "font";
+            curFont.dataset.value = 0;
+            scoreElements.push(curFont);
+        }
+        console.log(scoreElements);
+        drawScore();
     }
 
     function stopAll() {
@@ -127,9 +153,10 @@
 
     function init() {
         gameLoop = setInterval(updateCenario, 1000 / FPS);
-        dinoLoop = setInterval(run, 3000 / FPS);
+        dinoLoop = setInterval(run, 2000 / FPS);
         spawnLoop = setInterval(spawnCactus, CACTUS_SPAWN_TIME / FPS);
-        intervals = [gameLoop, dinoLoop, spawnLoop]
+        scoreLoop = setInterval(updateScore, 1000 / 6.6);
+        intervals = [gameLoop, dinoLoop, spawnLoop, scoreLoop];
     }
 
     class CactoSmall {

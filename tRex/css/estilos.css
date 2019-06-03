@@ -85,6 +85,7 @@
     height: 11px;
     background-image: url(sprites.png);
     position: relative;
+    background-position: -484px -2px; 
     margin: 1px;
     z-index: -1;
     float: right;
