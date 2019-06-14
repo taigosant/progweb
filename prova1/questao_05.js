@@ -1,3 +1,6 @@
+// David: Código implementado corretamente 
+// Nota: 2.0
+
 class Venda {
     constructor(id, quant, valor) {
         this.id = id;

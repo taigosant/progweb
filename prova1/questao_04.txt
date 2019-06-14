@@ -1,3 +1,6 @@
+David: Hoisting definido corretamente. Código de exemplo correto.
+Nota: 2.0
+
 Hoisting é uma caracteristica do Javascript que consiste em: 
 Toda declaração de variavel, usando "var", ou de função é "transportada" para inicio do escopo de declaração.
 Isso se restringe somente a declarações com "var". Não é aplicavel a funções atribuidas a variaveis declaradas com "let".

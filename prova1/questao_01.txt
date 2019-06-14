@@ -1,3 +1,6 @@
+David: Todos os erros foram reportados corretamente
+Nota: 2.0
+
 Erro 1 : Tags "<comment>" e "</comment>" não existem. A sintaxe do comentario é: 
     "<!-- {texto}  -->"
 
