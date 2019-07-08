@@ -18,6 +18,7 @@ module.exports.policies = {
   'curso/index': true,
   'view-homepage-or-redirect': true,
   'view-faq': true,
+  'game/ranking': true,
   'view-sobre': true,
   'view-contact': true,
   'legal/view-terms': true,

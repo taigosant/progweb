@@ -13,26 +13,30 @@
                     </select>
                 </div>
                 <button class="btn">Cancelar</button>
-                <button id="submit" class="btn btn-primary">Salvar</button>
+                <button id="taigo" class="btn btn-primary">Salvar</button>
             </form>
         </div>
     </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript">
-    $('button#submit').click(function () {
+    $('button#taigo').click(function () {
         $.ajax({
-            url: 'account/curso',
+            url: '/account/curso',
             type: 'POST',
             data: JSON.stringify({curso: $('#exampleFormControlSelect1').val()}),
             contentType: 'application/json',
             dataType: 'json',
             cache: false,
             success: function (data) {
-                alert('Success!');
+                console.log(data);
+                alert(data.message);
             }
             , error: function (jqXHR, textStatus, err) {
                 alert('text status ' + textStatus + ', err ' + err);
             }
         });
+
+        return false;
     });
 </script>

@@ -13,7 +13,7 @@ module.exports.routes = {
   //  ╦ ╦╔═╗╔╗ ╔═╗╔═╗╔═╗╔═╗╔═╗
   //  ║║║║╣ ╠╩╗╠═╝╠═╣║ ╦║╣ ╚═╗
   //  ╚╩╝╚═╝╚═╝╩  ╩ ╩╚═╝╚═╝╚═╝
-  'GET /':                   { action: 'view-homepage-or-redirect' },
+  'GET /':                   { action: 'game/trex' },
   'GET /welcome/:unused?':   { action: 'dashboard/view-welcome' },
 
   'GET /curso':                 { action: 'curso/index' },
@@ -39,8 +39,10 @@ module.exports.routes = {
   'GET /account':            { action: 'account/view-account-overview' },
   'GET /account/password':   { action: 'account/view-edit-password' },
   'GET /account/profile':    { action: 'account/view-edit-profile' },
-  'GET /account/curso':      { action: 'account/selecionar-curso' },
   'POST /account/curso':     { action: 'account/selecionar-curso' },
+  'GET /account/curso':      { action: 'account/selecionar-curso' },
+  'POST /pontuacao':         { action: 'game/pontuacao' },
+  'GET /ranking':            { action: 'game/ranking' },
 
 
   //  ╔╦╗╦╔═╗╔═╗  ╦═╗╔═╗╔╦╗╦╦═╗╔═╗╔═╗╔╦╗╔═╗   ┬   ╔╦╗╔═╗╦ ╦╔╗╔╦  ╔═╗╔═╗╔╦╗╔═╗

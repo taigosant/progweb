@@ -1,0 +1,26 @@
+<div id="ranking-list">
+        <div class="container">
+            <h1>Ranking dos jogadores</h1>
+            <div class="q-and-a">
+                <hr class="mt-4 mb-4" />
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Jogador</th>
+                            <th scope="col">Pontuação</th>
+                            <th scope="col">Data e hora</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% pts.forEach(function(pt){%>
+                        <tr>
+                            <th scope="row"><%= pt.jogador %></th>
+                            <td><%= pt.pontuacao %></td>
+                            <td><%= pt.data %></td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>

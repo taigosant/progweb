@@ -22,7 +22,7 @@ module.exports = {
     // public key in the view locals.  Otherwise, leave it as undefined.
     let curso;
     if (this.req.me.curso != null) {
-      [curso] = await Curso.find({ id: 1 }).limit(1);
+      [curso] = await Curso.find({ id: this.req.me.curso }).limit(1);
       console.log("[curso]",curso);
     }
     return {
