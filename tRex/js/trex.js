@@ -161,7 +161,7 @@
         dinoLoop = setInterval(run, 2000 / FPS);
         spawnCactusLoop = setInterval(spawnCactus, CACTUS_SPAWN_TIME / FPS);
         spawnPteroLoop = setInterval(spawnPtero, PTERO_SPAWN_TIME / FPS);
-        flyingLoop = setInterval(moveFying, 1000 / FPS);
+        flyingLoop = setInterval(moveFying, 800 / FPS);
         wingsLoop = setInterval(moveWing, 200);
         scoreLoop = setInterval(updateScore, 1000 / 6.6);
         intervals = [gameLoop, dinoLoop, spawnCactusLoop, spawnPteroLoop, flyingLoop, wingsLoop, scoreLoop];
@@ -362,7 +362,7 @@
     }
 
     function spawnPtero() {
-        let possibleHeights = ["-2px", "18px", "38px"];
+        let possibleHeights = ["-4px", "15px", "30px"];
         if (score > 100 && (Math.random() < PTERO_PROB)) {
             let newPtero = new Ptero();
             newPtero.element.style.bottom = possibleHeights[Math.ceil(Math.random() * 3)];

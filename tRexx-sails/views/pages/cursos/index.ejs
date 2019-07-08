@@ -1,0 +1,29 @@
+<div id="cursos-list">
+    <div class="container">
+        <h1>Cursos Show de Bola!</h1>
+        <div class="q-and-a">
+            <hr class="mt-4 mb-4" />
+            <h4>Cursos cadastrados até então.</h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Curso</th>
+                        <th scope="col">Sigla</th>
+                        <th scope="col">Descrição</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% cursos.forEach(function(curso){%>
+                    <tr>
+                        <th scope="row"><%= curso.id %></th>
+                        <td><%= curso.nome %></td>
+                        <td><%= curso.sigla %></td>
+                        <td><%= curso.descricao %></td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

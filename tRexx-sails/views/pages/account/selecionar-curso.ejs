@@ -1,0 +1,38 @@
+<div id="selecionar-curso">
+    <div class="container">
+        <h1>Selecionar Curso</h1>
+        <div class="q-and-a">
+            <hr class="mt-4 mb-4" />
+            <form>
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Por, favor escolha seu curso</label>
+                    <select class="form-control" id="exampleFormControlSelect1">
+                        <% cursos.forEach(function(curso){%>
+                        <option value="<%=curso.id%>"><%=curso.nome%></option>
+                        <%})%>
+                    </select>
+                </div>
+                <button class="btn">Cancelar</button>
+                <button id="submit" class="btn btn-primary">Salvar</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $('button#submit').click(function () {
+        $.ajax({
+            url: 'account/curso',
+            type: 'POST',
+            data: JSON.stringify({curso: $('#exampleFormControlSelect1').val()}),
+            contentType: 'application/json',
+            dataType: 'json',
+            cache: false,
+            success: function (data) {
+                alert('Success!');
+            }
+            , error: function (jqXHR, textStatus, err) {
+                alert('text status ' + textStatus + ', err ' + err);
+            }
+        });
+    });
+</script>
